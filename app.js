@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import connection  from './lib/db';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 // Set up the express app
 const app = express();
 
