@@ -66,15 +66,13 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   // if(!req.body.testPoint && (req.body.testPoint >= 0 || req.body.testPoint <= 100)) isValid = true
   // if(!req.body.seenInterstitial && (req.body.seenInterstitial == 0 || req.body.seenInterstitial == 1)) isValid = true
 
-  // if(isValid) {
+  if(!req.body.deviceId || !req.body.watchedVideo || !req.body.testPoint || !req.body.seenInterstitial) {
 
-  //   return res.status(400).send({
-  //     success: 'false',
-  //     message: 'missing some required information'
-  //   });
-  // }
-
-  console.log(req.header['CF-IPCountry'])
+    return res.status(400).send({
+      success: 'false',
+      message: 'missing some required information'
+    });
+  }
 
   var contestInfo = {
     device_id: req.body.deviceId,
@@ -87,8 +85,6 @@ app.post('/api/v1/addContestInfo', (req, res) => {
                 req.socket.remoteAddress ||
                 (req.connection.socket ? req.connection.socket.remoteAddress : null)
   }
-
-  console.log(contestInfo.ip_address)
  
   connection.query('INSERT INTO yolnisanlari_contest_info SET ?', contestInfo, function(err, result) {
     //if(err) throw err
