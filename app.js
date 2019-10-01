@@ -61,16 +61,18 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   console.log('watchedVideo '+ watchedVideo)
   console.log('seenInterstitial '+ seenInterstitial)
 
-  var isValid = true
+  var isValid = false
 
   // if(!req.body.deviceId && req.body.deviceId.length == 0) isValid = false
   // if(!req.body.watchedVideo && (req.body.watchedVideo != 0 || req.body.watchedVideo != 1)) isValid = false
   // if(!req.body.testPoint && (req.body.testPoint >= 0 || req.body.testPoint <= 100)) isValid = true
   // if(!req.body.seenInterstitial && (req.body.seenInterstitial == 0 || req.body.seenInterstitial == 1)) isValid = true
 
-  console.log(deviceId)
+  if(deviceId && watchedVideo && testPoint && seenInterstitial){
+    isValid = true
+  }
 
-  if(!deviceId || !watchedVideo || !testPoint || !seenInterstitial) {
+  if(!isValid) {
 
     return res.status(400).send({
       success: 'false',
