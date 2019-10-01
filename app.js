@@ -41,8 +41,7 @@ connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, res
     } else {                
       return res.status(201).send({
         success: 'true',
-        message: 'User added successfully',
-        todo
+        message: 'User added successfully'
       })
     }
 })
