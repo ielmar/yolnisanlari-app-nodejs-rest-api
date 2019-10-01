@@ -56,11 +56,11 @@ app.post('/api/v1/addUser', (req, res) => {
 app.post('/api/v1/addContestInfo', (req, res) => {
   const { deviceId, testPoint, watchedVideo, seenInterstitial } = req.body
 
-  console.log('deviceId '+ req.body.deviceId)
-  console.log('testPoint '+ req.body.testPoint)
-  console.log('watchedVideo '+ req.body.watchedVideo)
-  console.log('seenInterstitial '+ req.body.seenInterstitial)
-  
+  console.log('deviceId '+ deviceId)
+  console.log('testPoint '+ testPoint)
+  console.log('watchedVideo '+ watchedVideo)
+  console.log('seenInterstitial '+ seenInterstitial)
+
   var isValid = true
 
   // if(!req.body.deviceId && req.body.deviceId.length == 0) isValid = false
