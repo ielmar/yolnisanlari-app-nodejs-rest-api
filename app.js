@@ -28,6 +28,7 @@ app.post('/api/v1/addUser', (req, res) => {
     // name: req.sanitize('name').escape().trim(),
     // email: req.sanitize('email').escape().trim(),
     device_id: req.body.deviceId,
+    registration_time: new Date(),
     ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
                 req.connection.remoteAddress || 
                 req.socket.remoteAddress ||
@@ -56,31 +57,7 @@ app.post('/api/v1/addUser', (req, res) => {
 app.post('/api/v1/addContestInfo', (req, res) => {
   const { deviceId, testPoint, watchedVideo, seenInterstitial } = req.body
 
-  console.log('deviceId '+ deviceId)
-  console.log('testPoint '+ testPoint)
-  console.log('watchedVideo '+ watchedVideo)
-  console.log('seenInterstitial '+ seenInterstitial)
-
   var isValid = false
-
-  // if(!req.body.deviceId && req.body.deviceId.length == 0) isValid = false
-  // if(!req.body.watchedVideo && (req.body.watchedVideo != 0 || req.body.watchedVideo != 1)) isValid = false
-  // if(!req.body.testPoint && (req.body.testPoint >= 0 || req.body.testPoint <= 100)) isValid = true
-  // if(!req.body.seenInterstitial && (req.body.seenInterstitial == 0 || req.body.seenInterstitial == 1)) isValid = true
-
-  if(deviceId){
-    console.log('deviceId valid')
-  }
-  if(watchedVideo){
-    console.log('watchedVideo valid')
-  }
-  if(testPoint){
-    console.log('testPoint valid')
-  }
-  if(seenInterstitial){
-    console.log('seenInterstitial valid')
-  }
-
 
   if(deviceId && watchedVideo && testPoint && seenInterstitial){
     console.log('valid')
