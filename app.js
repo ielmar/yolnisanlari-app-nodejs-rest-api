@@ -22,8 +22,6 @@ app.post('/api/v1/addUser', (req, res) => {
     });
   }
 
-  console.log(req.header['CF-IPCountry'])
-
   var user = {
     // name: req.sanitize('name').escape().trim(),
     // email: req.sanitize('email').escape().trim(),
