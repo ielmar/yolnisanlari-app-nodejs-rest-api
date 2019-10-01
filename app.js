@@ -26,7 +26,7 @@ app.post('/api/v1/addUser', (req, res) => {
     // name: req.sanitize('name').escape().trim(),
     // email: req.sanitize('email').escape().trim(),
     device_id: req.body.deviceId,
-    ip_address: req.headers['CF-Connecting-IP'] || 
+    ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
                 req.connection.remoteAddress || 
                 req.socket.remoteAddress ||
                 (req.connection.socket ? req.connection.socket.remoteAddress : null)
