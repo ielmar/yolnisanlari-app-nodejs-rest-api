@@ -55,6 +55,12 @@ app.post('/api/v1/addUser', (req, res) => {
 
 app.post('/api/v1/addContestInfo', (req, res) => {
   if(!req.body.deviceId || !req.body.testPoint || !req.body.watchedVideo || !req.body.seenInterstitial) {
+
+    console.log('deviceId '+ req.body.deviceId)
+    console.log('testPoint '+ req.body.testPoint)
+    console.log('watchedVideo '+ req.body.watchedVideo)
+    console.log('seenInterstitial '+ req.body.seenInterstitial)
+
     return res.status(400).send({
       success: 'false',
       message: 'missing some required information'
