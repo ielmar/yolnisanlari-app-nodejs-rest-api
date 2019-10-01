@@ -54,11 +54,13 @@ app.post('/api/v1/addUser', (req, res) => {
 });
 
 app.post('/api/v1/addContestInfo', (req, res) => {
+  const { deviceId, testPoint, watchedVideo, seenInterstitial } = req.body
+
   console.log('deviceId '+ req.body.deviceId)
   console.log('testPoint '+ req.body.testPoint)
   console.log('watchedVideo '+ req.body.watchedVideo)
   console.log('seenInterstitial '+ req.body.seenInterstitial)
-
+  
   var isValid = true
 
   // if(!req.body.deviceId && req.body.deviceId.length == 0) isValid = false
@@ -66,7 +68,7 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   // if(!req.body.testPoint && (req.body.testPoint >= 0 || req.body.testPoint <= 100)) isValid = true
   // if(!req.body.seenInterstitial && (req.body.seenInterstitial == 0 || req.body.seenInterstitial == 1)) isValid = true
 
-  if(!req.body.deviceId || !req.body.watchedVideo || !req.body.testPoint || !req.body.seenInterstitial) {
+  if(!deviceId || !watchedVideo || !testPoint || !seenInterstitial) {
 
     return res.status(400).send({
       success: 'false',
@@ -77,7 +79,7 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   var contestInfo = {
     device_id: req.body.deviceId,
     test_date: new Date(),
-    test_point: req.body.testPoint * (req.body.watchedVideo == 0? 1 : 3),
+    test_point: req.body.testPoint * (req.body.watchedVideo == 0? 1 : 5),
     watched_video: req.body.watchedVideo,
     seen_interstitial: req.body.seenInterstitial,
     ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
@@ -99,7 +101,7 @@ app.post('/api/v1/addContestInfo', (req, res) => {
     } else {                
       return res.status(201).send({
         success: 'true',
-        message: 'User added successfully'
+        message: 'Contest info added successfully'
       })
     }
   })
