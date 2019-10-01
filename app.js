@@ -32,9 +32,9 @@ app.post('/api/v1/addUser', (req, res) => {
                 req.connection.remoteAddress || 
                 req.socket.remoteAddress ||
                 (req.connection.socket ? req.connection.socket.remoteAddress : null)
-}
+  }
  
-connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, result) {
+  connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, result) {
     //if(err) throw err
     if (err) {
         // req.flash('error', err)
@@ -50,7 +50,49 @@ connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, res
         message: 'User added successfully'
       })
     }
-})
+  })
+});
+
+app.post('/api/v1/addContestInfo', (req, res) => {
+  if(!req.body.deviceId || !req.body.testPoint || !req.body.watchedVideo || !req.body.seenInterstitial) {
+    return res.status(400).send({
+      success: 'false',
+      message: 'missing some required information'
+    });
+  }
+
+  console.log(req.header['CF-IPCountry'])
+
+  var contestInfo = {
+    device_id: req.body.deviceId,
+    test_date: new Date(),
+    test_point: req.body.testPoint,
+    watched_video: req.body.watchedVideo,
+    seen_interstitial: req.body.seenInterstitial,
+    email: req.sanitize('email').escape().trim(),
+    ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
+                req.connection.remoteAddress || 
+                req.socket.remoteAddress ||
+                (req.connection.socket ? req.connection.socket.remoteAddress : null)
+  }
+ 
+  connection.query('INSERT INTO yolnisanlari_contest_info SET ?', contestInfo, function(err, result) {
+    //if(err) throw err
+    if (err) {
+        // req.flash('error', err)
+          
+        // render to views/user/add.ejs
+        return res.status(400).send({
+          success: 'false',
+          message: 'some error from database'
+        });
+    } else {                
+      return res.status(201).send({
+        success: 'true',
+        message: 'User added successfully'
+      })
+    }
+  })
 });
 
 // get all todos
