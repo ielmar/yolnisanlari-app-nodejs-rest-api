@@ -101,6 +101,13 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   })
 });
 
+app.get('/api/v1/getServerTime', (req, res) => {
+  res.status(200).send({
+    success: 'true',
+    message: new Date(),
+  })
+});
+
 // get all todos
 app.get('/api/v1/todos', (req, res) => {
   res.status(200).send({
