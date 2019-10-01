@@ -96,11 +96,11 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   }
 
   var contestInfo = {
-    device_id: req.body.deviceId,
+    device_id: deviceId,
     test_date: new Date(),
-    test_point: req.body.testPoint * (req.body.watchedVideo == 0? 1 : 5),
-    watched_video: req.body.watchedVideo,
-    seen_interstitial: req.body.seenInterstitial,
+    test_point: testPoint * (watchedVideo == '0' ? 1 : 5),
+    watched_video: parseInt(watchedVideo),
+    seen_interstitial: seenInterstitial,
     ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
                 req.connection.remoteAddress || 
                 req.socket.remoteAddress ||
