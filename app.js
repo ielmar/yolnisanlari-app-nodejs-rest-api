@@ -54,18 +54,25 @@ app.post('/api/v1/addUser', (req, res) => {
 });
 
 app.post('/api/v1/addContestInfo', (req, res) => {
-  if(!req.body.deviceId || !req.body.testPoint || !req.body.watchedVideo || !req.body.seenInterstitial) {
+  console.log('deviceId '+ req.body.deviceId)
+  console.log('testPoint '+ req.body.testPoint)
+  console.log('watchedVideo '+ req.body.watchedVideo)
+  console.log('seenInterstitial '+ req.body.seenInterstitial)
 
-    console.log('deviceId '+ req.body.deviceId)
-    console.log('testPoint '+ req.body.testPoint)
-    console.log('watchedVideo '+ req.body.watchedVideo)
-    console.log('seenInterstitial '+ req.body.seenInterstitial)
+  var isValid = true
 
-    return res.status(400).send({
-      success: 'false',
-      message: 'missing some required information'
-    });
-  }
+  // if(!req.body.deviceId && req.body.deviceId.length == 0) isValid = false
+  // if(!req.body.watchedVideo && (req.body.watchedVideo != 0 || req.body.watchedVideo != 1)) isValid = false
+  // if(!req.body.testPoint && (req.body.testPoint >= 0 || req.body.testPoint <= 100)) isValid = true
+  // if(!req.body.seenInterstitial && (req.body.seenInterstitial == 0 || req.body.seenInterstitial == 1)) isValid = true
+
+  // if(isValid) {
+
+  //   return res.status(400).send({
+  //     success: 'false',
+  //     message: 'missing some required information'
+  //   });
+  // }
 
   console.log(req.header['CF-IPCountry'])
 
