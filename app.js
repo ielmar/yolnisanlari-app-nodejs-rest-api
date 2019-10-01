@@ -25,7 +25,8 @@ app.post('/api/v1/addUser', (req, res) => {
   var user = {
     // name: req.sanitize('name').escape().trim(),
     // email: req.sanitize('email').escape().trim(),
-    device_id: req.body.deviceId
+    device_id: req.body.deviceId,
+    ip_address: req.connection.remoteAddress
 }
  
 connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, result) {
