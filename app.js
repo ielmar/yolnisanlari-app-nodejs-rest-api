@@ -87,6 +87,8 @@ app.post('/api/v1/addContestInfo', (req, res) => {
                 req.socket.remoteAddress ||
                 (req.connection.socket ? req.connection.socket.remoteAddress : null)
   }
+
+  console.log(JSON.encode(contestInfo))
  
   connection.query('INSERT INTO yolnisanlari_contest_info SET ?', contestInfo, function(err, result) {
     //if(err) throw err
