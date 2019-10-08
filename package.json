@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node_modules/.bin/nodemon app.js --exec babel-node --",
-    "prod": "babel-node app.js"
+    "prod": "babel-node app.js",
+    "cron": "babel-node cron.js"
   },
   "author": "",
   "license": "ISC",
