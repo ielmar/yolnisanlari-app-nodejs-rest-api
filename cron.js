@@ -1,8 +1,8 @@
 import cron from 'node-cron';
 import fs from 'fs';
-import mysql from 'mysql';
 import connection  from './lib/db';
 
+// cron to select daily winner
 cron.schedule("1 0 * * *", function() {
     console.log("running a task to select the winner for yesterday");
 

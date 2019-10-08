@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import mysql from 'mysql';
 import connection  from './lib/db';
 
 import dotenv from 'dotenv';
@@ -23,8 +22,6 @@ app.post('/api/v1/addUser', (req, res) => {
   }
 
   var user = {
-    // name: req.sanitize('name').escape().trim(),
-    // email: req.sanitize('email').escape().trim(),
     device_id: req.body.deviceId,
     registration_time: new Date(),
     ip_address: (req.headers['x-forwarded-for'] || '').split(',').pop() || 
@@ -108,11 +105,32 @@ app.get('/api/v1/getServerTime', (req, res) => {
   })
 });
 
-// get all todos
-app.get('/api/v1/todos', (req, res) => {
-  res.status(200).send({
-    success: 'true',
-    message: 'todos retrieved successfully',
+// get daily winner
+app.get('/api/v1/getDailyWinner', (req, res) => {
+
+  connection.query('SELECT * FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date', function(err, result) {
+    //if(err) throw err
+    if (err) {
+        // render to views/user/add.ejs
+        return res.status(400).send({
+          success: 'false',
+          message: 'some error from database'
+        });
+    } else {     
+      var winner = {
+        device_id: result[0].device_id,
+        win_date: result[0].win_date
+      }           
+      return res.status(201).send({
+        success: 'true',
+        message: 'Today`s winner is ready',
+        winner
+      })
+    }
+  })
+  res.status(400).send({
+    success: 'false',
+    message: 'some error from database'
   })
 });
 
