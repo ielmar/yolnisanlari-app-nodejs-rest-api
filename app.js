@@ -128,10 +128,10 @@ app.get('/api/v1/getDailyWinner', (req, res) => {
       })
     }
   })
-  res.status(400).send({
-    success: 'false',
-    message: 'some error from database'
-  })
+  // res.status(400).send({
+  //   success: 'false',
+  //   message: 'some error from database'
+  // })
 });
 
 app.get('/api/v1/todos/:id', (req, res) => {
