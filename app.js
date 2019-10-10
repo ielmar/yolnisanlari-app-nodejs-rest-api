@@ -113,7 +113,7 @@ app.get('/api/v1/getServerTime', (req, res) => {
 // get daily winner
 app.get('/api/v1/getDailyWinner', (req, res) => {
 
-  connection.query('SELECT * FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
+  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
     //if(err) throw err
     if (err) {
         // render to views/user/add.ejs
