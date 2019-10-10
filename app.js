@@ -122,7 +122,7 @@ app.get('/api/v1/getDailyWinner', (req, res) => {
           message: 'some error from database'
         });
     } else {     
-      console.log('result '+String(result[0].win_date))
+      console.log('result '+result[0].win_date.toJSON())
       var winner = {
         device_id: result[0].device_id,
         win_date: result[0].win_date
