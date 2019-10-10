@@ -99,6 +99,11 @@ app.post('/api/v1/addContestInfo', (req, res) => {
 });
 
 app.get('/api/v1/getServerTime', (req, res) => {
+  var timeObj = {
+    time: new Date(),
+    is_beginning_of_week: false,
+    is_beginning_of_month: false
+  }
   res.status(200).send({
     success: 'true',
     message: new Date(),
