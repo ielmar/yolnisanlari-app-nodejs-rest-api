@@ -112,8 +112,24 @@ app.get('/api/v1/getServerTime', (req, res) => {
 
 // get daily winner
 app.get('/api/v1/getDailyWinner', (req, res) => {
+  const { deviceId } = req.body
 
-  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
+  var isValid = false
+
+  if(deviceId){
+    console.log('valid')
+    isValid = true
+  }
+
+  if(!isValid) {
+
+    return res.status(400).send({
+      success: 'false',
+      message: 'missing some required information'
+    });
+  }
+
+  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1 AND device_id = ?', device_id, function(err, result) {
     //if(err) throw err
     if (err) {
         // render to views/user/add.ejs
@@ -121,23 +137,29 @@ app.get('/api/v1/getDailyWinner', (req, res) => {
           success: 'false',
           message: 'some error from database'
         });
-    } else {     
-      console.log('result '+result[0].win_date)
-      var winner = {
-        device_id: result[0].device_id,
-        win_date: result[0].win_date
-      }           
-      return res.status(201).send({
-        success: 'true',
-        message: 'Today`s winner is ready',
-        winner
-      })
+    } else {
+      // check if the result is not empty
+      if(result.length > 0) {
+        // is winner
+        console.log('result '+result[0].win_date)
+        var winner = {
+          device_id: result[0].device_id,
+          win_date: result[0].win_date
+        }           
+        return res.status(201).send({
+          success: 'true',
+          message: 'Congrats! You are the winner!',
+          winner
+        })
+      } else {
+        // is not the winner
+        res.status(400).send({
+          success: 'false',
+          message: 'You are not the winner. Maybe tomorrow :)'
+        })
+      }
     }
   })
-  // res.status(400).send({
-  //   success: 'false',
-  //   message: 'some error from database'
-  // })
 });
 
 app.get('/api/v1/todos/:id', (req, res) => {
