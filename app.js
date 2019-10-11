@@ -111,7 +111,7 @@ app.get('/api/v1/getServerTime', (req, res) => {
 });
 
 // get daily winner
-app.get('/api/v1/getDailyWinner', (req, res) => {
+app.post('/api/v1/getDailyWinner', (req, res) => {
   const { deviceId } = req.body
 
   console.log(req.body)
