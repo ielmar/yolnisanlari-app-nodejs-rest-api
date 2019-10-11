@@ -114,6 +114,8 @@ app.get('/api/v1/getServerTime', (req, res) => {
 app.get('/api/v1/getDailyWinner', (req, res) => {
   const { deviceId } = req.body
 
+  console.log(req.body)
+
   var isValid = false
 
   if(deviceId){
