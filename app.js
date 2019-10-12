@@ -131,7 +131,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
     });
   }
 
-  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1 AND device_id = ?', deviceId, function(err, result) {
+  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
     //if(err) throw err
     if (err) {
         // render to views/user/add.ejs
@@ -140,10 +140,10 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           message: 'some error from database'
         });
     } else {
-      // check if the result is not empty
-      if(result.length > 0) {
+      // check if the result's device_id is the user's device id
+      if(result[0].device_id == deviceId) {
         // is winner
-        console.log('result '+result[0].win_date)
+        // console.log('result '+result[0].win_date)
         var winner = {
           device_id: result[0].device_id,
           win_date: result[0].win_date
@@ -160,7 +160,8 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         // is not the winner
         res.status(400).send({
           success: 'false',
-          message: 'You are not the winner. Maybe tomorrow :)'
+          message: 'You are not the winner. Maybe tomorrow :)',
+          winner
         })
       }
     }
