@@ -154,6 +154,9 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           winner
         })
       } else {
+        var winner = {
+          win_date: result[0].win_date
+        }  
         // is not the winner
         res.status(400).send({
           success: 'false',
