@@ -150,8 +150,8 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         }           
         return res.status(201).send({
           success: 'true',
-          message: 'Congrats! You are the winner!',
-          winner
+          message: 'Təbriklər! Bugünkü qalib sənsən!',
+          winner 
         })
       } else {
         var winner = {
@@ -160,7 +160,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         // is not the winner
         res.status(400).send({
           success: 'false',
-          message: 'You are not the winner. Maybe tomorrow :)',
+          message: 'Qalib olmadın, amma kədərlənmə, hər gün test edərək, videoya baxaraq hər gün kontur əldə edə bilərsən!',
           winner
         })
       }
