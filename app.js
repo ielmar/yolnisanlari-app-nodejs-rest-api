@@ -156,12 +156,11 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
             }
             // update the table
             var updateInfo = {
-              is_used: 1,
               winner_user_device_id: deviceId,
               win_date: result[0].win_date,
               id: codeResults[0].id
             }
-            connection.query('UPDATE yolnisanlari_codes SET is_used = ?, winner_user_device_id = ?, win_date = ? WHERE id = ?', updateInfo, function(err, result) {
+            connection.query('UPDATE yolnisanlari_codes SET is_used = 1, winner_user_device_id = ?, win_date = ? WHERE id = ?', updateInfo, function(err, result) {
               if(err) throw err;
 
             })
