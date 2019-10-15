@@ -150,7 +150,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         // is winner. if operator is given, select unused code for the operator
         if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar')
         {
-          connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = ?", operator, function(err, result) {
+          connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = '"+operator+"'", function(err, result) {
             // add the code to winner object
             winner.code = result[0].code
 
