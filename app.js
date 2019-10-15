@@ -145,7 +145,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         // is winner. if operator is given, select unused code for the operator
         if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar') {
 
-          connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = '"+operator+"'", function(err, result) {
+          connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = '"+operator+"'", function(err, codeResults) {
             if (err) 
               console.log(err.message);
 
@@ -153,7 +153,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
             var winner = {
               device_id: result[0].device_id,
               win_date: result[0].win_date,
-              code: result[0].code
+              code: codeResults[0].code
             }
             console.log(winner.device_id)
             // update the table
