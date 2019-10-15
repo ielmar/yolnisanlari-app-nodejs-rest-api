@@ -130,7 +130,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
     });
   }
 
-  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
+  connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date, code_id, id FROM yolnisanlari_winners WHERE date(now()) - 1 = win_date AND daily = 1', function(err, result) {
     //if(err) throw err
     if (err) {
         // render to views/user/add.ejs
@@ -142,10 +142,43 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
       // check if the result's device_id is the user's device id
       if(result[0].device_id == deviceId) {
 
-        // is winner. if operator is given, select unused code for the operator
-        if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar') {
+        // if code_id is 0, no code has been assigned. get a code and assign
+        if (result[0].code_id == 0) {
 
-          connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = ? AND win_date <> ?", [operator, result[0].win_date], function(err, codeResults) {
+          // is winner. if operator is given, select unused code for the operator
+          if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar') {
+
+            // get an unused code from table
+            connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = ?", operator, function(err, codeResults) {
+              if (err) throw err;
+  
+              // add the code to winner object
+              var winner = {
+                device_id: result[0].device_id,
+                win_date: result[0].win_date,
+                code: codeResults[0].code
+              }
+              // update the table
+              var updateInfo = [
+                codeResults[0].id,
+                result[0].id
+              ]
+              connection.query('UPDATE yolnisanlari_winners SET code_id = ? WHERE id = ?', updateInfo, function(err, updateResult) {
+                if(err) throw err;
+  
+              })
+  
+              return res.status(201).send({
+                success: 'true',
+                message: 'Təbriklər! Bugünkü qalib sənsən!',
+                winner 
+              })
+            })
+          }
+        } else {
+
+          // code_is is already assigned. get the code from the table
+          connection.query("SELECT * FROM yolnisanlari_codes WHERE id = ?", result[0].code_id, function(err, codeResults) {
             if (err) throw err;
 
             // add the code to winner object
@@ -154,34 +187,12 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
               win_date: result[0].win_date,
               code: codeResults[0].code
             }
-            // update the table
-            var updateInfo = [
-              deviceId,
-              result[0].win_date,
-              codeResults[0].id
-            ]
-            connection.query('UPDATE yolnisanlari_codes SET is_used = 1, winner_user_device_id = ?, win_date = ? WHERE id = ?', updateInfo, function(err, result) {
-              if(err) throw err;
-
-            })
 
             return res.status(201).send({
               success: 'true',
               message: 'Təbriklər! Bugünkü qalib sənsən!',
               winner 
             })
-          })
-        } else {
-
-          var winner = {
-            device_id: result[0].device_id,
-            win_date: result[0].win_date
-          }
-
-          return res.status(201).send({
-            success: 'true',
-            message: 'Təbriklər! Bugünkü qalib sənsən!',
-            winner 
           })
         }
       } else {
