@@ -153,14 +153,15 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = '"+operator+"'", function(err, result) {
             if (err) 
               console.log(err.message);
-              
+
+
             // add the code to winner object
             winner.code = result[0].code
-
+            console.log(winner.code)
             // update the table
           })
         }
-        console.log(winner.code)
+        console.log('outside '+winner.code)
 
         return res.status(201).send({
           success: 'true',
