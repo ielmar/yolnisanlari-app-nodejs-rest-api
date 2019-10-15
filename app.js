@@ -165,7 +165,6 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
             win_date: result[0].win_date
           }
         }
-        console.log('outside '+winner.code)
 
         return res.status(201).send({
           success: 'true',
