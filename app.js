@@ -155,12 +155,12 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
               console.log(err.message);
 
             // add the code to winner object
-            // winner = {
-            //   device_id: result[0].device_id,
-            //   win_date: result[0].win_date,
-            //   code: codeResults[0].code
-            // }
-            Object.assign(winner, {code: codeResults[0].code});
+            var winner = {
+              device_id: result[0].device_id,
+              win_date: result[0].win_date,
+              code: codeResults[0].code
+            }
+            // Object.assign(winner, {code: codeResults[0].code});
             console.log(winner)
             // update the table
           })
