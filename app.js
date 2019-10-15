@@ -157,7 +157,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
               win_date: result[0].win_date,
               code: codeResults[0].code
             }
-            console.log(winner.device_id)
+            console.log(winner)
             // update the table
           })
         } 
