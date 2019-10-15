@@ -157,6 +157,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
             // update the table
           })
         }
+        console.log(winner.code)
 
         return res.status(201).send({
           success: 'true',
