@@ -166,6 +166,8 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           }
         }
 
+        console.log(winner)
+
         return res.status(201).send({
           success: 'true',
           message: 'Təbriklər! Bugünkü qalib sənsən!',
