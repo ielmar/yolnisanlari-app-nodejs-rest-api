@@ -142,6 +142,8 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
       // check if the result's device_id is the user's device id
       if(result[0].device_id == deviceId) {
 
+        var winner
+
         // is winner. if operator is given, select unused code for the operator
         if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar') {
 
@@ -150,7 +152,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
               console.log(err.message);
 
             // add the code to winner object
-            var winner = {
+            winner = {
               device_id: result[0].device_id,
               win_date: result[0].win_date,
               code: codeResults[0].code
@@ -160,7 +162,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           })
         } 
         else {
-          var winner = {
+          winner = {
             device_id: result[0].device_id,
             win_date: result[0].win_date
           }
