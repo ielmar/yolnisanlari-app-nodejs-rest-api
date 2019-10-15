@@ -157,7 +157,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
 
             // add the code to winner object
             winner.code = result[0].code
-            console.log(winner.code)
+            console.log(winner.device_id)
             // update the table
           })
         }
