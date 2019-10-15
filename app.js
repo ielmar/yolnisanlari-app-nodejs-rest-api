@@ -114,7 +114,7 @@ app.get('/api/v1/getServerTime', (req, res) => {
 app.post('/api/v1/getDailyWinner', (req, res) => {
   const { deviceId, operator } = req.body
 
-  console.log(req.body)
+  // console.log(req.body)
 
   var isValid = false
 
@@ -146,8 +146,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         if(operator == 'azercell' || operator == 'bakcell' || operator == 'nar') {
 
           connection.query("SELECT * FROM yolnisanlari_codes WHERE is_used = 0 AND operator = ?", operator, function(err, codeResults) {
-            if (err) 
-              console.log(err.message);
+            if (err) throw err;
 
             // add the code to winner object
             var winner = {
@@ -155,9 +154,16 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
               win_date: result[0].win_date,
               code: codeResults[0].code
             }
-            // Object.assign(winner, {code: codeResults[0].code});
-            console.log(winner)
             // update the table
+            var updateInfo = {
+              is_used: 1,
+              winner_user_device_id: deviceId,
+              win_date: result[0].win_date
+            }
+            connection.query('UPDATE yolnisanlari_codes SET is_used = ?, winner_user_device_id = ?, win_date = ?', updateInfo, function(err, result) {
+              if(err) throw err;
+
+            })
 
             return res.status(201).send({
               success: 'true',
@@ -171,7 +177,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
             device_id: result[0].device_id,
             win_date: result[0].win_date
           }
-          
+
           return res.status(201).send({
             success: 'true',
             message: 'Təbriklər! Bugünkü qalib sənsən!',
@@ -179,6 +185,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
           })
         }
       } else {
+
         var winner = {
           win_date: result[0].win_date
         }  
