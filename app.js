@@ -190,7 +190,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
 
             return res.status(201).send({
               success: 'true',
-              message: 'Təbriklər! Bugünkü qalib sənsən! \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+              message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
               winner 
             })
           })
@@ -203,7 +203,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
         // is not the winner
         res.status(400).send({
           success: 'false',
-          message: 'Qalib olmadın, amma kədərlənmə, hər gün test edərək, videoya baxaraq hər gün kontur əldə edə bilərsən! Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+          message: 'Qalib olmadın, amma kədərlənmə, hər gün test edərək, videoya baxaraq hər gün kontur əldə edə bilərsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
           winner
         })
       }
