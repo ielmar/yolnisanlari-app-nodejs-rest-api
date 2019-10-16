@@ -190,7 +190,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
 
             return res.status(201).send({
               success: 'true',
-              message: 'Təbriklər! Bugünkü qalib sənsən!',
+              message: 'Təbriklər! Bugünkü qalib sənsən! Dostlarınla paylaş, dostların da həm öyrənib, həm də balans əldə etsinlər!',
               winner 
             })
           })
