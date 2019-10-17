@@ -170,7 +170,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
   
               return res.status(201).send({
                 success: 'true',
-                message: 'Təbriklər! Bugünkü qalib sənsən!',
+                message: 'Təbriklər! Bugünkü qalib sənsən! Test versiya. Kod real deyil. 20 oktyabrda real yarışma başlayacaq. \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
                 winner 
               })
             })
@@ -190,7 +190,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
 
             return res.status(201).send({
               success: 'true',
-              message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+              message: 'Təbriklər! Bugünkü qalib sənsən! Test versiya. Kod real deyil. 20 oktyabrda real yarışma başlayacaq. \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
               winner 
             })
           })
