@@ -228,7 +228,7 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
     });
   }
 
-  connection.query('select yw.win_date, yc.code, yc.operator from yolnisanlari_winners yw, yolnisanlari_codes yc where yw.code_id = yc.id and yw.device_id = ? and yw.code_id <> 0', deviceId, function(err, result) {
+  connection.query('select CAST(yw.win_date AS CHAR) win_date, yc.code, yc.operator from yolnisanlari_winners yw, yolnisanlari_codes yc where yw.code_id = yc.id and yw.device_id = ? and yw.code_id <> 0', deviceId, function(err, result) {
     //if(err) throw err
     if (err) {
         // render to views/user/add.ejs
