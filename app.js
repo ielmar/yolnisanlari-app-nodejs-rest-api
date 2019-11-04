@@ -211,17 +211,51 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
   })
 });
 
-app.get('/api/v1/todos/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  db.map((todo) => {
-    if (todo.id === id) {
-      return res.status(200).send({
-        success: 'true',
-        message: 'todo retrieved successfully',
-        todo,
-      });
-    } 
-});
+app.post('/api/v1/getIfOldWinner/', (req, res) => {
+  const { deviceId } = req.body
+
+  var isValid = false
+
+  if(deviceId){
+    isValid = true
+  }
+
+  if(!isValid) {
+
+    return res.status(400).send({
+      success: 'false',
+      message: 'missing some required information'
+    });
+  }
+
+  connection.query('select yw.win_date, yc.code, yc.operator from yolnisanlari_winners yw, yolnisanlari_codes yc where yw.code_id = yc.id and yw.device_id = ? and yw.code_id <> 0', device_id, function(err, result) {
+    //if(err) throw err
+    if (err) {
+        // render to views/user/add.ejs
+        return res.status(400).send({
+          success: 'false',
+          message: 'some error from database'
+        });
+    } else {
+      
+      // loop through results
+      result.map(code => {
+        console.log(code.code)
+      })
+      // // add the code to winner object
+      // var winner = {
+      //   device_id: result[0].device_id,
+      //   win_date: result[0].win_date,
+      //   code: codeResults[0].code
+      // }
+
+      // return res.status(201).send({
+      //   success: 'true',
+      //   message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+      //   winner 
+      // })
+    }
+  });
 
  return res.status(404).send({
    success: 'false',
