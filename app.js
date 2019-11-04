@@ -242,24 +242,17 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
       result.map(code => {
         console.log(code.code)
       })
-      // // add the code to winner object
-      // var winner = {
-      //   device_id: result[0].device_id,
-      //   win_date: result[0].win_date,
-      //   code: codeResults[0].code
-      // }
+      // add the code to winner object
+      var winner = {
+        result
+      }
 
-      // return res.status(201).send({
-      //   success: 'true',
-      //   message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
-      //   winner 
-      // })
+      return res.status(201).send({
+        success: 'true',
+        message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+        winner 
+      })
     }
-  });
-
- return res.status(404).send({
-   success: 'false',
-   message: 'todo does not exist',
   });
 });
 
