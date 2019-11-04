@@ -249,7 +249,7 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
 
       return res.status(201).send({
         success: 'true',
-        message: 'Təbriklər! Bugünkü qalib sənsən! \n\r \n\r Dostlarınla paylaş, dostların da həm öyrənib, həm balans əldə etsinlər!',
+        message: '',
         winner 
       })
     }
