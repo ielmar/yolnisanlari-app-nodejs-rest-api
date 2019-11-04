@@ -237,21 +237,29 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
           message: 'some error from database'
         });
     } else {
-      
-      // loop through results
-      result.map(code => {
-        console.log(code.code)
-      })
-      // add the code to winner object
-      var winner = {
-        result
-      }
+      // if result is not empty
+      if(result.length > 0) {
+        // loop through results
+        result.map(code => {
+          console.log(code.code)
+        })
+        // add the code to winner object
+        var winner = {
+          result
+        }
 
-      return res.status(201).send({
-        success: 'true',
-        message: '',
-        winner 
-      })
+        return res.status(201).send({
+          success: 'true',
+          message: '',
+          winner 
+        })
+      } else {
+        // render to views/user/add.ejs
+        return res.status(400).send({
+          success: 'false',
+          message: 'no result'
+        });
+      }
     }
   });
 });
