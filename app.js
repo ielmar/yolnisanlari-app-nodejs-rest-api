@@ -6,10 +6,8 @@ import connection  from './lib/db';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Set up the express app
 const app = express();
 
-// Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -31,11 +29,8 @@ app.post('/api/v1/addUser', (req, res) => {
   }
  
   connection.query('INSERT INTO yolnisanlari_users SET ?', user, function(err, result) {
-    //if(err) throw err
     if (err) {
-        // req.flash('error', err)
           
-        // render to views/user/add.ejs
         return res.status(400).send({
           success: 'false',
           message: 'some error from database'
@@ -80,11 +75,8 @@ app.post('/api/v1/addContestInfo', (req, res) => {
   }
  
   connection.query('INSERT INTO yolnisanlari_contest_info SET ?', contestInfo, function(err, result) {
-    //if(err) throw err
     if (err) {
-        // req.flash('error', err)
           
-        // render to views/user/add.ejs
         return res.status(400).send({
           success: 'false',
           message: 'some error from database'
@@ -99,11 +91,6 @@ app.post('/api/v1/addContestInfo', (req, res) => {
 });
 
 app.get('/api/v1/getServerTime', (req, res) => {
-  var timeObj = {
-    time: new Date(),
-    is_beginning_of_week: false,
-    is_beginning_of_month: false
-  }
   res.status(200).send({
     success: 'true',
     message: new Date(),
@@ -113,8 +100,6 @@ app.get('/api/v1/getServerTime', (req, res) => {
 // get daily winner
 app.post('/api/v1/getDailyWinner', (req, res) => {
   const { deviceId, operator } = req.body
-
-  // console.log(req.body)
 
   var isValid = false
 
@@ -131,9 +116,7 @@ app.post('/api/v1/getDailyWinner', (req, res) => {
   }
 
   connection.query('SELECT device_id, CAST(win_date AS CHAR) win_date, code_id, id FROM yolnisanlari_winners WHERE subdate(current_date, 1) = win_date AND daily = 1', function(err, result) {
-    //if(err) throw err
     if (err) {
-        // render to views/user/add.ejs
         return res.status(400).send({
           success: 'false',
           message: 'some error from database'
@@ -229,21 +212,13 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
   }
 
   connection.query('select CAST(yw.win_date AS CHAR) win_date, yc.code, yc.operator from yolnisanlari_winners yw, yolnisanlari_codes yc where yw.code_id = yc.id and yw.device_id = ? and yw.code_id <> 0', deviceId, function(err, result) {
-    //if(err) throw err
     if (err) {
-        // render to views/user/add.ejs
         return res.status(400).send({
           success: 'false',
           message: 'some error from database'
         });
     } else {
-      // if result is not empty
       if(result.length > 0) {
-        // loop through results
-        result.map(code => {
-          console.log(code.code)
-        })
-        // add the code to winner object
         var winner = {
           result
         }
@@ -254,7 +229,6 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
           winner 
         })
       } else {
-        // render to views/user/add.ejs
         return res.status(400).send({
           success: 'false',
           message: 'no result'
@@ -263,27 +237,6 @@ app.post('/api/v1/getIfOldWinner/', (req, res) => {
     }
   });
 });
-
-app.delete('/api/v1/todos/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10);
-
-  db.map((todo, index) => {
-    if (todo.id === id) {
-       db.splice(index, 1);
-       return res.status(200).send({
-         success: 'true',
-         message: 'Todo deleted successfuly',
-       });
-    }
-  });
-
-    return res.status(404).send({
-      success: 'false',
-      message: 'todo not found',
-    });
-
-});
-
 
 const PORT = process.env.PORT; 
 
